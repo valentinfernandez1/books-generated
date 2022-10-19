@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --tag=valenfernandez/books:latest
+    - uses: docker/login-action@v1 
+      with:
+        username: "valenfernandez"
+        password: "@Bitionz1"
+    - name: Push the Docker image
+      run: docker push valenfernandez/books:latest
