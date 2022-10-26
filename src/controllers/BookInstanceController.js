@@ -1,7 +1,5 @@
 import BookInstance from "../Models/BookInstance.js";
 
-
-
 export default {
   getAll: async (req, res, next) => {
     try {
@@ -17,8 +15,8 @@ export default {
     const _id = req.params.id;
     try {
       let obtainedBookInstance = await BookInstance.findById(_id)
-			.populate("Book")
-			.exec().lean();
+        .populate("book")
+        .lean();
 
       res.status(200).json(obtainedBookInstance);
     } catch (err) {
@@ -27,19 +25,19 @@ export default {
   },
 
   saveOne: async (req, res, next) => {
-	const reqBookInstance = req.body.BookInstance;
-    
+    const reqBookInstance = req.body.BookInstance;
+
     try {
       const newBookInstance = await BookInstance.create(reqBookInstance);
       res.json(newBookInstance);
     } catch (err) {
-      res.status(500).json(err); 
+      res.status(500).json(err);
     }
   },
 
   updateOneById: async (req, res, next) => {
     const _id = req.params.id;
-	const reqBookInstance = req.body.BookInstance;
+    const reqBookInstance = req.body.BookInstance;
 
     try {
       let result = await BookInstance.updateOne({ _id }, reqBookInstance);
@@ -59,5 +57,4 @@ export default {
       res.status(500).json(err);
     }
   },
-
 };

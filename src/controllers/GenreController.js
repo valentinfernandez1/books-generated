@@ -1,7 +1,5 @@
 import Genre from "../Models/Genre.js";
 
-
-
 export default {
   getAll: async (req, res, next) => {
     try {
@@ -16,8 +14,7 @@ export default {
   getOneById: async (req, res, next) => {
     const _id = req.params.id;
     try {
-      let obtainedGenre = await Genre.findById(_id)
-			.exec().lean();
+      let obtainedGenre = await Genre.findById(_id).lean();
 
       res.status(200).json(obtainedGenre);
     } catch (err) {
@@ -26,19 +23,19 @@ export default {
   },
 
   saveOne: async (req, res, next) => {
-	const reqGenre = req.body.Genre;
-    
+    const reqGenre = req.body.Genre;
+
     try {
       const newGenre = await Genre.create(reqGenre);
       res.json(newGenre);
     } catch (err) {
-      res.status(500).json(err); 
+      res.status(500).json(err);
     }
   },
 
   updateOneById: async (req, res, next) => {
     const _id = req.params.id;
-	const reqGenre = req.body.Genre;
+    const reqGenre = req.body.Genre;
 
     try {
       let result = await Genre.updateOne({ _id }, reqGenre);
@@ -58,5 +55,4 @@ export default {
       res.status(500).json(err);
     }
   },
-
 };

@@ -1,7 +1,5 @@
 import Author from "../Models/Author.js";
 
-
-
 export default {
   getAll: async (req, res, next) => {
     try {
@@ -15,30 +13,31 @@ export default {
 
   getOneById: async (req, res, next) => {
     const _id = req.params.id;
+    console.log(_id);
     try {
-      let obtainedAuthor = await Author.findById(_id)
-			.exec().lean();
+      let obtainedAuthor = await Author.findById(_id).lean();
 
       res.status(200).json(obtainedAuthor);
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
 
   saveOne: async (req, res, next) => {
-	const reqAuthor = req.body.Author;
-    
+    const reqAuthor = req.body.Author;
+
     try {
       const newAuthor = await Author.create(reqAuthor);
       res.json(newAuthor);
     } catch (err) {
-      res.status(500).json(err); 
+      res.status(500).json(err);
     }
   },
 
   updateOneById: async (req, res, next) => {
     const _id = req.params.id;
-	const reqAuthor = req.body.Author;
+    const reqAuthor = req.body.Author;
 
     try {
       let result = await Author.updateOne({ _id }, reqAuthor);
@@ -58,5 +57,4 @@ export default {
       res.status(500).json(err);
     }
   },
-
 };
